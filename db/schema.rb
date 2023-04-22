@@ -10,13 +10,22 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2023_04_22_023207) do
+ActiveRecord::Schema.define(version: 2023_04_22_024215) do
 
   create_table "authers", force: :cascade do |t|
     t.string "name"
     t.string "penname"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "book_authers", force: :cascade do |t|
+    t.integer "book_id", null: false
+    t.integer "auther_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["auther_id"], name: "index_book_authers_on_auther_id"
+    t.index ["book_id"], name: "index_book_authers_on_book_id"
   end
 
   create_table "books", force: :cascade do |t|
@@ -36,5 +45,7 @@ ActiveRecord::Schema.define(version: 2023_04_22_023207) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "book_authers", "authers"
+  add_foreign_key "book_authers", "books"
   add_foreign_key "books", "publishers"
 end

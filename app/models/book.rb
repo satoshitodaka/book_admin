@@ -5,13 +5,20 @@ class Book < ApplicationRecord
 
   validates :name, presence: true, length: { maximum: 25 }
   validates :price, numericality: { greater_than_or_equal: 0 }
+  before_validation :add_lovely_to_cat
   validate do |book|
     if book.name.include?('exercise')
       book.errors[:name] << "I don't like exercise"
     end
   end
 
-  before_validation :add_lovely_to_cat
+  enum sales_status: {
+    reservation: 0, # 予約受付
+    now_on_sale: 1, # 販売中
+    end_of_sale: 2, # 販売終了
+  }
+
+  
 
   def add_lovely_to_cat
     self.name = self.name.gsub(/Cat/) do |matched|
@@ -31,4 +38,6 @@ class Book < ApplicationRecord
   def hight_price?
     price >+ 5000
   end
+
+
 end

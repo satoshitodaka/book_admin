@@ -35,7 +35,7 @@ class Book < ApplicationRecord
     Rails.logger.warn "Please check!!"
   end
 
-  def hight_price?
+  def high_price?
     price >+ 5000
   end
 
